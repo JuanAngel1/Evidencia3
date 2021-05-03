@@ -1,0 +1,183 @@
+import random
+import datetime
+import sys
+import csv 
+import os
+import sqlite3
+from sqlite3 import Error
+columnas =("Folio","Producto","Descripcion del articulos","Cantidad de piezas vendidas","Precio de venta","Costo Final","Fecha de compra")
+ventas = {}
+folios = {}
+resi = 1
+costo_crema = 300
+costo_labiales = 150
+nombre_archivo = "Cosmeteria"
+datos = []
+costo_exfoliante = 250
+
+    
+
+print("""
+                        Bienvenido a nuestra tienda en linea de cosmeticos
+    """)
+
+respuesta_general = int(input("""Deseas ingresar a nuestro servicio: 
+[1-Si / 2-No]: """))
+
+if respuesta_general == 1:
+
+    while True:
+        print("             MENU PRINCIPAL            ")
+        print("")
+        print("Que deseas realizar: ")
+        print("""
+        1.- Registrar una venta
+        2.- Consultar una venta
+        3.- Obtener un registro de ventas para una fecha en especifico
+        4.- Salir""")
+
+        
+        decision_usuario = int(input("Que accion deseas realizar: "))
+        if decision_usuario == 1:
+            venta_activa_1 = True
+            while venta_activa_1:
+
+                print("Bienvenido a nuestro catalogo: ")
+                print("""
+                Articulos disponibles: 
+                1.- Crema
+                2.- Labiales
+                3.- Exfoliantes""")
+
+            
+                num_arti = int(input("Ingrese el numero de lo que desea comprar: "))
+                if num_arti == 1:
+                    articulo = "Cremas"
+                    descripcion_cremas = "Productos cosméticos hidratantes que ayudan a mantener la humedad y elasticidad de tu piel; evitando la resequedad y brindando un cierto nivel de protección al rostro"
+                    print("")
+                    piezas_crema = int(input("Ingrese cuantas cremas desea comprar: "))
+                    fechaactual = (datetime.date.today())
+                    print(f"Fecha_Compra: {fechaactual}")
+                    if ventas:
+                        folio_ventas = max(ventas) + random.randrange(10000,90000,1)
+                    else:
+                        folio_ventas = random.randrange(10000,90000,1)
+                    registro_ventanas = [articulo,piezas_crema,fechaactual]
+                    ventas[folio_ventas] = registro_ventanas
+                    folios = folio_ventas
+                    print("")
+                    print(f"Compraste {piezas_crema} piezas de crema y el costo final fue de {piezas_crema * costo_crema} pesos.")
+                    print("")
+                    fechaactual = datetime.date.today()
+                    print(f"\nSe agregaron los datos:\n {registro_ventanas} con el folio {folio_ventas} el dia {fechaactual}")
+                    print("")
+                    costo_final = piezas_crema * costo_crema
+                    datos.append([folio_ventas,articulo,descripcion_cremas,piezas_crema,costo_crema,costo_final,fechaactual])
+                    
+                    resi = int(input("Deseas realizar otra compra \n (1-Si / 2-No): "))
+                    if resi ==2:
+                        venta_activa_1 = False
+                    else:
+                        principal = int(input("""GRACIAS POR SU PREFERENCIA 
+                        PORFAVOR OPRIMA 1: """))
+                        if principal == 1:
+                            True
+                        else:
+                            print("Muchas gracias por tu visita")
+                            break
+                if num_arti == 2:
+                    articulo2 = "Labiales"
+                    descripcion_labial = "Producto cosmético que contiene pigmentos, aceites, ceras y emolientes que dan color y textura a los labios"
+                    print("")
+                    piezas_labiales = int(input("Ingrese cuantos labiales desea comprar: "))
+                    fechaactual = (datetime.date.today())
+                    print(f"Fecha_Compra: {fechaactual}")
+                    if ventas:
+                        folio_ventas = max(ventas) + random.randrange(10000,90000)
+                    else:
+                        folio_ventas = random.randrange(10000,90000)
+                    registro_ventanas = [articulo2,piezas_labiales,fechaactual]
+                    ventas[folio_ventas] = registro_ventanas
+                    print("")
+                    print(f"Compraste {piezas_labiales} piezas de labial y el costo final fue de {piezas_labiales * costo_labiales} pesos.")
+                    print("")
+                
+                    print(f"\nSe agregaron los datos:\n {registro_ventanas} con el folio {folio_ventas} el dia {fechaactual}")
+                    print("")
+                    costo_final_labial = piezas_labiales * costo_labiales
+                    datos.append([folio_ventas,articulo2,descripcion_labial,piezas_labiales,costo_labiales,costo_final_labial,fechaactual])
+                    resi = int(input("Deseas realizar otra compra \n (1-Si / 2-No): "))
+                    if resi ==2:
+                        venta_activa_1 = False
+                    else:
+                        principal = int(input("""GRACIAS POR SU PREFERENCIA: 
+                        OPRIMA 1 PORFAVOR: """))
+                        if principal == 1:
+                            True
+                        else:
+                            print("Muchas gracias por tu visita")
+                            break
+                if num_arti == 3:
+                    articulo3 = "Exfoliantes"
+                    descripcion_exfoliantes = "Producto cosmético que elimina las células muertas de la piel"
+                    print("")
+                    piezas_exfoliante = int(input("Ingrese cuantos exfoliantes desea comprar: "))
+                    fechaactual = (datetime.date.today())
+                    print(f"Fecha_Compra: {fechaactual}")
+                    if ventas:
+                        folio_ventas = max(ventas) + random.randrange(10000,90000,1)
+                    else:
+                        folio_ventas = random.randrange(10000,90000,1)
+                    registro_ventanas = [articulo3,piezas_exfoliante,fechaactual]
+                    ventas[folio_ventas] = registro_ventanas
+                    folios = folio_ventas
+                    print("")
+                    print(f"Compraste {piezas_exfoliante} piezas de exfoliante y el costo final fue de {piezas_exfoliante * costo_exfoliante} pesos.")
+                    print("")
+                    fechaactual = datetime.date.today()
+                    print(f"\nSe agregaron los datos:\n {registro_ventanas} con el folio {folio_ventas} el dia {fechaactual}")
+                    print("")
+                    costo_final = piezas_exfoliante * costo_exfoliante
+                    datos.append([folio_ventas,articulo3,descripcion_exfoliantes,piezas_exfoliante,costo_exfoliante,costo_final,fechaactual])
+                    
+                    resi = int(input("Deseas realizar otra compra \n (1-Si / 2-No): "))
+                    if resi ==2:
+                        venta_activa_1 = False
+                    else:
+                        principal = int(input("""GRACIAS POR SU PREFERENCIA 
+                        PORFAVOR OPRIMA 1: """))
+                        if principal == 1:
+                            True
+                        else:
+                            print("Muchas gracias por tu visita")
+                            break
+        elif decision_usuario == 2:
+            
+            clave_buscar = int(input("Ingresa la clave de la compra que realizaste: "))
+            
+            
+            if clave_buscar in ventas.keys():
+                print("Los datos de la venta son: [NOMBRE ARTICULO / NUMERO DE ARTICULOS/FECHA_COMPRA]")
+                print(ventas[clave_buscar])
+                print("")
+                print("Regresaremos al Menu Principal")
+                print("")
+            else:
+                print("Esa clave no esta registrada")
+        elif decision_usuario == 3:
+            try:
+                with sqlite3.connect("Tabla_cosmeteria.db") as conn:
+                    c = conn.cursor()
+                    fecha_actual = datetime.datetime.combine(datetime.date.today(), datetime.datetime.min.time())
+                    c.execute("CREATE TABLE IF NOT EXISTS registro_ventas (folio INTEGER PRIMARY KEY, producto TEXT NOT NULL, Descripcion TEXT NOT NULL, Cantidad de productos INTEGER, Precio de venta INTEGER, Costo final INTEGER,Fecha DATE);")
+                    print("Tabla creada exitosamente")
+            except Error as e:
+                print (e)
+            except:
+                print(f"Se produjo el siguiente error: {sys.exc_info()[0]}")
+                
+        elif decision_usuario == 4:
+            print("Buen dia, vuelva pronto")
+            break
+else:
+    print("Buen dia, vuelva pronto")
